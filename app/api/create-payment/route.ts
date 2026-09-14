@@ -24,11 +24,11 @@ export async function POST(request: Request) {
         price_amount: Number(amount),
         price_currency: currency.toLowerCase(),
         pay_currency: "usdttrc20", // Default or let user choose on the hosted page
-        ipn_callback_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://horizon-relief.org"}/api/ipn`,
+        ipn_callback_url: `${process.env.SITE_URL || "https://horizon-relief.org"}/api/ipn`,
         order_id: `horizon-relief-${Date.now()}`,
         order_description: "Humanitarian Relief Donation — Horizon",
-        success_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://horizon-relief.org"}/success`,
-        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://horizon-relief.org"}/cancel`,
+        success_url: `${process.env.SITE_URL || "https://horizon-relief.org"}/success`,
+        cancel_url: `${process.env.SITE_URL || "https://horizon-relief.org"}/cancel`,
       }),
     });
 

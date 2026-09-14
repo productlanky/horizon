@@ -394,18 +394,18 @@ export function DonationModal() {
                 </span>
               </div>
 
-              {/* Submit Button to MoonPay */}
+              {/* Submit Button to NowPayment */}
               <button
                 onClick={handleDonate}
                 className="w-full py-5 bg-[#1A1A1A] text-white rounded-xl font-bold text-sm tracking-widest uppercase shadow-xl shadow-[#1A1A1A]/10 active:scale-[0.98] transition-all flex items-center justify-center gap-3 hover:bg-black"
               >
-                Continue to MoonPay{" "}
+                Continue to NowPayment{" "}
                 {amount ? `(${currency.symbol}${amount})` : ""}{" "}
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <p className="text-center text-[10px] uppercase tracking-widest text-[#1A1A1A]/40 font-bold mt-5 mb-2">
-                Secured via MoonPay Local Checkout
+                Secured via NowPayment Local Checkout
               </p>
             </div>
           </motion.div>
