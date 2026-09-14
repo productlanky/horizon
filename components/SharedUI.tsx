@@ -236,7 +236,6 @@ export function DonationModal() {
   const { isModalOpen, closeModal } = useDonation();
   const [amount, setAmount] = useState<number | string>(50);
   const [isMonthly, setIsMonthly] = useState(false);
-  const [isAnonymous, setIsAnonymous] = useState(false);
   const [currency, setCurrency] = useState(CURRENCIES[0]);
 
   const handleDonate = async () => {
@@ -300,8 +299,8 @@ export function DonationModal() {
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <span className="bg-[#E8F5E9] text-[#22C55E] text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest flex items-center gap-1">
-                      <Zap className="w-3 h-3 fill-current" /> Instant Local
-                      Fiat Checkout
+                      <Zap className="w-3 h-3 fill-current" /> Instant Crypto
+                      Checkout
                     </span>
                   </div>
                   <h2 className="text-3xl font-black text-[#1A1A1A] tracking-tight">
@@ -386,16 +385,9 @@ export function DonationModal() {
               </div>
 
               {/* FIXED: Anonymous Checkbox with explicit state toggle */}
-              <div
-                onClick={() => setIsAnonymous(!isAnonymous)}
-                className="flex items-center gap-3 cursor-pointer mb-8 group w-fit select-none"
-              >
-                <div
-                  className={`w-6 h-6 rounded-md flex items-center justify-center transition-colors border-2 ${isAnonymous ? "bg-[#22C55E] border-[#22C55E]" : "border-[#1A1A1A]/20 group-hover:border-[#1A1A1A]/40"}`}
-                >
-                  {isAnonymous && (
-                    <CheckCircle2 className="w-4 h-4 text-white" />
-                  )}
+              <div className="flex items-center mx-auto gap-3 cursor-pointer mb-8 group w-fit select-none">
+                <div className="w-6 h-6 rounded-md flex items-center justify-center transition-colors border-2 bg-[#22C55E] border-[#22C55E]">
+                  <CheckCircle2 className="w-4 h-4 text-white" />
                 </div>
                 <span className="text-sm font-bold text-[#1A1A1A]">
                   Donate Anonymously
