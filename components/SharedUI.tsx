@@ -239,20 +239,28 @@ export function DonationModal() {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [currency, setCurrency] = useState(CURRENCIES[0]);
 
-  // Handle Secure MoonPay Redirection
-  const handleDonate = () => {
+  const handleDonate = async () => {
     const numericAmount = Number(amount) || 10;
+    const baseCurr = currency?.code ? currency.code.toLowerCase() : "usd";
 
-    // Replace with your actual MoonPay Live/Sandbox Public Key if available,
-    // otherwise use their standard widget URL structure
-    const moonpayApiKey = "pk_test_pIQBog8EEQNRHCGSuFNck68JJNmGMg1h";
+    try {
+      const res = await fetch("/api/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: numericAmount, currency: baseCurr }),
+      });
 
-    // Construct the MoonPay checkout URL
-    const moonpayUrl = `https://buy.moonpay.com/?apiKey=${moonpayApiKey}&currencyCode=usdt&baseCurrencyCode=${currency.code.toLowerCase()}&baseCurrencyAmount=${numericAmount}&showWalletAddressForm=true`;
+      const data = await res.json();
 
-    // Open MoonPay in a secure new tab
-    window.open(moonpayUrl, "_blank", "noopener,noreferrer");
-    closeModal();
+      if (data.invoiceUrl) {
+        window.open(data.invoiceUrl, "_blank", "noopener,noreferrer");
+        closeModal();
+      } else {
+        alert(data.error || "Failed to initialize secure payment gateway.");
+      }
+    } catch (err) {
+      console.error("Network error during checkout initialization", err);
+    }
   };
 
   return (
@@ -372,8 +380,7 @@ export function DonationModal() {
                     onClick={() => setAmount(preset)}
                     className={`flex-1 py-3.5 rounded-xl text-sm font-bold border-2 transition-all ${amount === preset || amount === String(preset) ? "border-[#22C55E] bg-[#22C55E]/10 text-[#22C55E]" : "border-[#1A1A1A]/10 text-[#1A1A1A]/60 hover:border-[#1A1A1A]/30"}`}
                   >
-                    {currency.symbol}{' '}
-                    {preset}
+                    {currency.symbol} {preset}
                   </button>
                 ))}
               </div>
